@@ -1,5 +1,3 @@
-[![Circle CI](https://circleci.com/gh/fike/docker-debian-pg.svg?style=svg)](https://circleci.com/gh/fike/docker-debian-pg)
-
 # PostgreSQL based Debian Jessie
 
 This respository is specified to use some PostgreSQL version based in a Debian 

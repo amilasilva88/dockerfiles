@@ -1,5 +1,7 @@
 # Dockerfiles
 
+[![Join the chat at https://gitter.im/timbira/dockerfiles](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/timbira/dockerfiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This repository contains files to build applications using Docker conteiners. To see or use, get in to directories.
 
 ## License

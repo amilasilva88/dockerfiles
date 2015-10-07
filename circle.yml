@@ -1,0 +1,14 @@
+machine:
+  services:
+    - docker
+dependencies:
+  pre: 
+    - sudo service postgresql stop
+  cache_directories:
+    - "~/container"
+  override:
+    - docker info
+    - docker build -t timbira/debian-postgres:9.4 ~/dockerfiles/debian-postgres/9.4 
+test:
+  override:
+    - docker run -d -p 5432:5432 --name 9.4 timbira/debian-postgres:9.4 && docker run -it --net="container:9.4" -e PGPASSWORD="foobar" timbira/debian-postgres:9.4 psql -h 127.0.0.1 -p 5432 -U postgres --command "SELECT version();" && docker stop 9.4

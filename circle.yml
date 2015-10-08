@@ -1,6 +1,11 @@
 machine:
   services:
     - docker
+general:
+  branches:
+    only:
+      - master
+      - improve_circleci
 dependencies:
   pre: 
     - sudo service postgresql stop

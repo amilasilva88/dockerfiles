@@ -1,3 +1,5 @@
+# vim:set ft=dockerfile:
+#
 # VERSION: 	0.3
 # DESCRIPTION: 	Create the PostgreSQL 9.4 Databasee in a container 
 # AUTHOR: 	Fernando Ike (fike@midstorm.org)

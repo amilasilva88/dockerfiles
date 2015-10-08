@@ -23,7 +23,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && apt-get upgrade -y
 
-RUN apt-get install locales-all postgresql-9.4 postgresql-client-9.4 postgresql-contrib-9.4 -y
+RUN apt-get install --no-install-recommends locales-all postgresql-9.4 postgresql-client-9.4 postgresql-contrib-9.4 -y
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

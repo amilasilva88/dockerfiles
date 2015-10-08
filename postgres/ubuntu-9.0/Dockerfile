@@ -24,7 +24,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq
 
-RUN apt-get install wget -qq
+RUN apt-get install --no-install-recommends wget -qq
 
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main 9.0" > /etc/apt/sources.list.d/pgdg.list
 
@@ -34,7 +34,7 @@ RUN gpg --export --armor ACCC4CF8|apt-key add -
 
 RUN apt-get update 
 
-RUN apt-get install postgresql-9.0 postgresql-client-9.0 postgresql-contrib-9.0 -y
+RUN apt-get install --no-install-recommends postgresql-9.0 postgresql-client-9.0 postgresql-contrib-9.0 -y
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 

@@ -22,21 +22,26 @@ MAINTAINER Fernando Ike de Oliveira <fike@midstorm.org>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -qq && apt-get upgrade -y
+RUN apt-get update -qq && \
+      apt-get upgrade -y
 
-RUN apt-get install --no-install-recommends wget -qq
+RUN apt-get install --no-install-recommends wget -y
 
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main 9.1" > /etc/apt/sources.list.d/pgdg.list
 
-RUN gpg --keyserver keys.gnupg.net --recv-keys ACCC4CF8
+RUN gpg --keyserver keys.gnupg.net --recv-keys ACCC4CF8 && \
+      gpg --export --armor ACCC4CF8|apt-key add -
 
-RUN gpg --export --armor ACCC4CF8|apt-key add -
+RUN apt-get update && \
+      apt-get install --no-install-recommends -y \ 
+        postgresql-9.1 \ 
+        postgresql-client-9.1 \
+        postgresql-contrib-9.1 
 
-RUN apt-get update 
-
-RUN apt-get install --no-install-recommends postgresql-9.1 postgresql-client-9.1 postgresql-contrib-9.1 -y
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
+RUN apt-get clean && \
+      apt-get autoremove --purge -y && \ 
+      apt-get remove --purge wget -y && \
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
 USER postgres
 

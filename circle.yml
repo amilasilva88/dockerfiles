@@ -1,11 +1,7 @@
 machine:
   services:
     - docker
-general:
-  branches:
-    only:
-      - master
-      - improve_circleci
+
 dependencies:
   pre: 
     - sudo service postgresql stop
@@ -13,11 +9,11 @@ dependencies:
     - "~/container"
   override:
     - docker info
-    - for i in $(ls -1 ~/test/postgres |egrep "[0-9]{1,2}\.[0-9]{1,2}.*"); do if [[ -e ~/container/$i.tar ]]; then docker load --input ~/container/$i.tar; fi && docker build -t timbira/postgres:$i ~/test/postgres/$i && mkdir -p ~/container && docker save --output ~/container/$i.tar timbira/postgres:$i; done
+    - for i in $(ls -1 ~/dockerfiles/postgres |egrep "[0-9]{1,2}\.[0-9]{1,2}.*"); do if [[ -e ~/container/$i.tar ]]; then docker load --input ~/container/$i.tar; fi && docker build -t timbira/postgres:$i ~/dockerfiles/postgres/$i && mkdir -p ~/container && docker save --output ~/container/$i.tar timbira/postgres:$i; done
 
 test:
   override:
-    - for i in $(ls -1 ~/test/postgres | egrep "[0-9]{1,2}\.[0-9]{1,2}.*"); do docker run -d --name $i timbira/postgres:$i && docker run -it --net="container:$i" -e PGPASSWORD="foobar" timbira/postgres:$i psql -h 127.0.0.1 -p 5432 -U postgres --command "SELECT version();" && docker stop $i; done
+    - for i in $(ls -1 ~/dockerfiles/postgres | egrep "[0-9]{1,2}\.[0-9]{1,2}.*"); do docker run -d --name $i timbira/postgres:$i && docker run -it --net="container:$i" -e PGPASSWORD="foobar" timbira/postgres:$i psql -h 127.0.0.1 -p 5432 -U postgres --command "SELECT version();" && docker stop $i; done
    
 notify:
   webhooks:

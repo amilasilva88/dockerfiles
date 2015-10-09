@@ -26,7 +26,7 @@ RUN apt-get update && \
       apt-get upgrade -y
 
 RUN apt-get install --no-install-recommends -y postgresql-9.4 \
-      postgresql-client-9.4 
+      postgresql-client-9.4 \
       postgresql-contrib-9.4 
 
 RUN apt-get clean && \

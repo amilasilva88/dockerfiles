@@ -15,7 +15,7 @@
 #    postgresql-9.3
 #
 #  
-FROM fike/jessie.en_US
+FROM fike/debian:jessie.en_US
 
 MAINTAINER Fernando Ike <fike@midstorm.org>
 

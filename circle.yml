@@ -8,13 +8,13 @@ dependencies:
   cache_directories:
     - "~/container"
   override:
-    - docker info
-    - for i in $(ls -1 ~/dockerfiles/postgres |egrep "[0-9]{1,2}\.[0-9]{1,2}.*"); do if [[ -e ~/container/$i.tar ]]; then docker load --input ~/container/$i.tar; fi && docker build -t timbira/postgres:$i ~/dockerfiles/postgres/$i && mkdir -p ~/container && docker save --output ~/container/$i.tar timbira/postgres:$i; done
-
+    - ~/dockerfiles/tests/postgres.sh build:
+        parallel: true
+    - ~/dockerfiles/tests/atom.sh build:
+        parallel: true
 test:
   override:
-    - for i in $(ls -1 ~/dockerfiles/postgres | egrep "[0-9]{1,2}\.[0-9]{1,2}.*"); do docker run -d --name $i timbira/postgres:$i && docker run -it --net="container:$i" -e PGPASSWORD="foobar" timbira/postgres:$i psql -h 127.0.0.1 -p 5432 -U postgres --command "SELECT version();" && docker stop $i; done
-   
-notify:
-  webhooks:
-    - url: https://webhooks.gitter.im/e/b570905592c63eaad9fb
+    - ~/dockerfiles/tests/postgres.sh run_test:
+        parallel: true
+    - ~/dockerfiles/tests/atom.sh run_test:
+        parallel: true
